@@ -1,33 +1,39 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import './style.css';
 
 function CountryForm(props) {
+
+  const {register, handleSubmit} = useForm();
+  const onSubmit = data => props.onSubmit(data);
+
   return (
-    <input name="country" placeholder="Enter country name" value={props.data.formValue} onChange={(event) => props.onChange(event.target.value)} />
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input name="country" placeholder="Enter country name" ref={register} />
+      <input type="submit"/>
+    </form>
   );
 }
 
 function Main(props) {
-  // console.log(props);
   if (undefined !== props.data) {
     const data = props.data;
     return (
       <main>
-        <CountryForm onChange={props.handleChange} data={props} />
-        <h3><span className="capitalize">{props.data.country}</span> as of {props.data.lastUpdate}</h3>
+        <CountryForm data={props} onSubmit={(event) => props.onSubmit(event)} />
+        <h3><span className="capitalize">{props.data.country}</span> as of {data.lastUpdate}</h3>
         <ul>
-          <li>{"Confirmed cases: " + props.data.confirmed.toLocaleString()}</li>
-          <li>{"Critical condition: " + props.data.critical.toLocaleString()}</li>
-          <li>{"Number of deaths: " + props.data.deaths.toLocaleString()}</li>
-          <li>{"Number of recovered patients: " + props.data.recovered.toLocaleString()}</li>
+          <li>{"Confirmed cases: " + data.confirmed.toLocaleString()}</li>
+          <li>{"Critical condition: " + data.critical.toLocaleString()}</li>
+          <li>{"Number of deaths: " + data.deaths.toLocaleString()}</li>
+          <li>{"Number of recovered patients: " + data.recovered.toLocaleString()}</li>
         </ul>
       </main>
     )
   }
-  console.log(props);
   return (
     <main>
-      <CountryForm onChange={(i) => props.onChange(i)} data={props} />
+      <CountryForm data={props} onSubmit={(event) => props.onSubmit(event)} />
       <p>No Data Given</p>
     </main>
   );
