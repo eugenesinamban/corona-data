@@ -28,9 +28,10 @@ main #search-result {
     padding: 1rem 0 0;
 }
 
-main form input {
+main form .input {
     font-family: 'Open Sans', sans-serif;
     padding: 1rem;
+    border: 2.5px solid white;
 }
 
 main #provider {
@@ -38,16 +39,19 @@ main #provider {
 }
 
 .button {
+    padding: 1rem;
     background: #fafafa;
     border: 2.5px solid #fafafa;
 }
 
 .button:hover {
+    padding: 1rem;
     background: #c7c7c7;
     border: 2.5px solid #c7c7c7;
 }
 
 .button:active {
+    padding: 1rem;
     background: #c2c2c2;
     border: 2.5px solid #c2c2c2;
 }

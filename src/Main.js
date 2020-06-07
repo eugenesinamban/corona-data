@@ -8,7 +8,7 @@ function CountryForm(props) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input name="country" placeholder="Enter country name" ref={register} />
+      <input name="country" placeholder="Enter country name" ref={register} className="input" />
       <input className="button" type="submit"/>
     </form>
   );
