@@ -16,7 +16,7 @@ function CountryForm(props) {
 
 function Main(props) {
   console.log(props);
-  let result = 'Please fill up form';
+  let result = 'Please enter proper country name';
   if (undefined !== props.data) {
     const data = props.data;
     result = (
@@ -35,6 +35,7 @@ function Main(props) {
     <main>
       <CountryForm data={props} onSubmit={(event) => props.onSubmit(event)} />
       <div id="search-result">{ result }</div>
+      <div id="provider">Api provided by <a href="https://rapidapi.com/Gramzivi/api/covid-19-data" className="link" target="_blank" rel="noopener noreferrer">https://rapidapi.com/Gramzivi/api/covid-19-data</a></div>
     </main>
   );
   
