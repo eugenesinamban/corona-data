@@ -3,9 +3,7 @@ import React from 'react';
 function Header() {
   return (
     <header>
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
+      <h3>Corona Number Search</h3>
     </header>
   );
 }

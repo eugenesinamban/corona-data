@@ -1,8 +1,8 @@
 import React from 'react';
-// import Header from './Header';
+import './style.css';
+import Header from './Header';
 import Main from './Main';
-// import Footer from './Footer';
-
+import Footer from './Footer';
 
 class App extends React.Component {
   constructor(props) {
@@ -10,62 +10,73 @@ class App extends React.Component {
     this.state = {
       country : '',
       date : '',
-      formValue : ''
+      formValue : '',
+      default : 'totals?format=json'
     }
   }
 
+  fetchData(country = null) {
+    const url = 'https://covid-19-data.p.rapidapi.com/';
+    const method = 'GET';
+    const headers = {
+      "x-rapidapi-host": "covid-19-data.p.rapidapi.com",
+      "x-rapidapi-key": "6773226ebamsh91f290dfb4363d2p1362eajsn616f5bb09e42"
+    };
+    const defaultQuery = 'totals?format=json';
+  
+    if (null === country || '' === country) {
+      fetch(url + defaultQuery, {
+        "method" : method,
+        "headers" : headers
+      })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          data: data[0]
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    } else {
+      const query = "country?format=json&name=" + country
+  
+      fetch(url + query, {
+        "method" : method,
+        "headers" : headers
+      })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          data: data[0],
+          country: country
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
+  
+  }
+
   componentDidMount() {
-    fetch("https://covid-19-data.p.rapidapi.com/country?format=json&name=" + this.state.country, {
-      "method": "GET",
-      "headers": {
-        "x-rapidapi-host": "covid-19-data.p.rapidapi.com",
-        "x-rapidapi-key": "6773226ebamsh91f290dfb4363d2p1362eajsn616f5bb09e42"
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      this.setState({
-        data: data[0]
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    this.fetchData();
   }
 
   handleSubmit(event){
-    fetch("https://covid-19-data.p.rapidapi.com/country?format=json&name=" + event.country, {
-      "method": "GET",
-      "headers": {
-        "x-rapidapi-host": "covid-19-data.p.rapidapi.com",
-        "x-rapidapi-key": "6773226ebamsh91f290dfb4363d2p1362eajsn616f5bb09e42"
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      this.setState({
-        data: data[0],
-        country: event.country
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    this.fetchData(event.country);
     this.setState({
       country: event.country
     });
-    
-    console.log('success fuckers');
-    console.log(this.state);
   }
 
   render() {
     return (
       <div className="App">
-        {/* <Header></Header> */}
+        <Header></Header>
         <Main
         data={this.state.data} formValue={this.state.formValue} onSubmit={(event) => this.handleSubmit(event)} />
-        {/* <Footer></Footer> */}
+        <Footer></Footer>
       </div>
     );
   }

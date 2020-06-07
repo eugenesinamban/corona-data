@@ -1,6 +1,5 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import './style.css';
 
 function CountryForm(props) {
 
@@ -10,31 +9,32 @@ function CountryForm(props) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <input name="country" placeholder="Enter country name" ref={register} />
-      <input type="submit"/>
+      <input className="button" type="submit"/>
     </form>
   );
 }
 
 function Main(props) {
+  console.log(props);
+  let result = 'Please fill up form';
   if (undefined !== props.data) {
     const data = props.data;
-    return (
-      <main>
-        <CountryForm data={props} onSubmit={(event) => props.onSubmit(event)} />
-        <h3><span className="capitalize">{props.data.country}</span> as of {data.lastUpdate}</h3>
+    result = (
+      <div>
+        <h3 id="result-title"><span className="capitalize">{data.country ?? 'World Totals'}</span></h3>
         <ul>
           <li>{"Confirmed cases: " + data.confirmed.toLocaleString()}</li>
           <li>{"Critical condition: " + data.critical.toLocaleString()}</li>
           <li>{"Number of deaths: " + data.deaths.toLocaleString()}</li>
           <li>{"Number of recovered patients: " + data.recovered.toLocaleString()}</li>
         </ul>
-      </main>
-    )
+      </div>
+    );
   }
   return (
     <main>
       <CountryForm data={props} onSubmit={(event) => props.onSubmit(event)} />
-      <p>No Data Given</p>
+      <div id="search-result">{ result }</div>
     </main>
   );
   
